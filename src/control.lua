@@ -34,6 +34,8 @@ local events = {
 
   [defines.events.on_gui_closed] = loaders.on_gui_closed,
   [defines.events.on_entity_settings_pasted] = loaders.on_entity_settings_pasted,
+
+  [defines.events.on_player_rotated_entity] = loaders.on_player_rotated_entity,
 }
 
 for event, handler in pairs(events) do

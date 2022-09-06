@@ -65,9 +65,12 @@ function loaders.sync_loader(entity)
   local inventory = container.get_inventory(defines.inventory.chest)
   inventory.clear()
 
-  for i = 1, entity.filter_slot_count do
-    if entity.get_filter(i) then
-      inventory.insert({ name = entity.get_filter(i) })
+  if (entity.loader_type == "output") then
+
+    for i = 1, entity.filter_slot_count do
+      if entity.get_filter(i) then
+        inventory.insert({ name = entity.get_filter(i) })
+      end
     end
   end
 end
@@ -79,6 +82,15 @@ function loaders.on_entity_removed(event)
 
   global.container_for_loader[entity.unit_number].destroy()
   global.container_for_loader[entity.unit_number] = nil
+end
+
+function loaders.on_player_rotated_entity(event)
+  local entity = event.entity
+  if not (entity and entity.valid) then return end
+  if (event.entity.type ~= "loader-1x1") then return end
+
+  -- game.print("loader rotated")
+  loaders.sync_loader(entity)
 end
 
 return loaders
