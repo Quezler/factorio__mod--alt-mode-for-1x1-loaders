@@ -80,6 +80,18 @@ function loaders.on_entity_removed(event)
   if not (entity and entity.valid) then return end
   if (event.entity.type ~= "loader-1x1") then return end
 
+  if not global.container_for_loader[entity.unit_number] then
+    game.print("please report this error to my author:")
+    game.print(serpent.block({
+      mod = 'alt-mode-for-1x1-loaders',
+      entity = entity.name,
+      surface = entity.surface.name,
+      position = entity.position,
+      screenshot = 'please include'
+    }))
+    return loaders.init()
+  end
+
   global.container_for_loader[entity.unit_number].destroy()
   global.container_for_loader[entity.unit_number] = nil
 end
